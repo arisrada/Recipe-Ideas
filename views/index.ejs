@@ -1,0 +1,64 @@
+<%- include('partials/header.ejs') %> <% if (!locals.recipes && !locals.details)
+{ %>
+<h1>Food Recipes</h1>
+<form action="/ingredients" method="POST" class="input-form">
+  <input
+    type="text"
+    name="ingredients"
+    class="feedback-input"
+    placeholder="Enter the ingredients with comma separated"
+  />
+  <div class="button-group">
+    <button type="reset">Reset</button>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+<% } %> <% if (locals.recipes && recipes.length > 0) { %>
+<h1>Food Recipes</h1>
+<div class="recipeContainer">
+  <% recipes.forEach((recipe) => { %>
+  <form action="/recipes" method="POST" class="recipeForm">
+    <input
+      type="hidden"
+      name="selectedRecipeId"
+      class="selectedRecipeId"
+      value="<%= recipe.id %>"
+    />
+    <div class="recipe" onclick="submitRecipe(this)" style="cursor: pointer">
+      <img
+        src="<%= recipe.image %>"
+        alt="<%= recipe.title %>"
+        width="300"
+        height="200"
+      />
+      <div style="width: 300px">
+        <h3 class="recipe-title"><%= recipe.title %></h3>
+      </div>
+    </div>
+  </form>
+  <% }) %>
+</div>
+<% } %> <% if (locals.details) { %>
+<div class="reset">
+  <form action="/reset" method="POST" class="input-form">
+    <button type="submit">Reset search</button>
+  </form>
+</div>
+<h3 class="details-title"><%= details.title %></h3>
+<img
+  src="<%= details.image %>"
+  alt="<%= details.title %>"
+  width="300"
+  height="200"
+/>
+<div class="details">
+  <p><%= details.instructions %></p>
+  <p>Ingredients needed:</p>
+  <ul>
+    <% details.extendedIngredients.forEach(ingredient => { %>
+    <li><%= ingredient.name %></li>
+    <% }); %>
+  </ul>
+</div>
+
+<% }%> <%- include('partials/footer.ejs') %>
