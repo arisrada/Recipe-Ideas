@@ -9,7 +9,7 @@ const port = process.env.PORT || 3000;
 
 const API_URL = "https://api.spoonacular.com/recipes";
 
-const yourApiKey = "dc6ebc470a0b47d78fd80ed4b7093a81";
+const yourApiKey = process.env.SPOONACULAR_API_KEY;
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
